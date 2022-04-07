@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core
+namespace Sima.Core
 {
     public interface IModule
     {
@@ -51,7 +51,7 @@ namespace Core
         void OnPreferencesLoaded();
         void OnPreferencesLoaded(string filepath);
     }
-    public static class ModuleManager
+    internal static class ModuleManager
     {
         public class Module
         {

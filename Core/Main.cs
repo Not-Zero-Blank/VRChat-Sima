@@ -1,18 +1,18 @@
 ﻿using MelonLoader;
 using QuickMenuLib;
 using System;
-using Core;
+using Sima.Core;
 
-public class Main : MelonLoader.MelonMod
+internal class Main : MelonLoader.MelonMod
 {
-    public const string Version = "1.0.0.0";
-    public const string Name = "Template";
-    public const string Author = "Blank";
+    internal const string Version = "1.0.0.0";
+    internal const string Name = "Sima";
+    internal const string Author = "Blank";
     public override void OnApplicationStart()
     {
         AppDomain.CurrentDomain.UnhandledException += HandleException;
         Console.WriteLine("Hello");
-        Core.ModuleManager.RegisterModules();
+        ModuleManager.RegisterModules();
         foreach (ModuleManager.Module a in ModuleManager.Modules) a.OnApplicationStart();
     }
     public override void OnApplicationLateStart()
@@ -76,10 +76,10 @@ public class Main : MelonLoader.MelonMod
         Logs.Error(e.ExceptionObject.ToString());
     }
 }
-public class Menu : ModMenu
+internal class Menu : ModMenu
 {
     public override string MenuName => Main.Name;
-    public Menu()
+    internal Menu()
     {
         Logo = null; // You can put a sprite here and QuickMenuLib will automatically add it.
     }
