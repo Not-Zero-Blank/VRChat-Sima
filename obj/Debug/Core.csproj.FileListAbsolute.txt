@@ -1,8 +1,0 @@
-D:\repo\Github\VRChat-Sima\bin\Debug\Template.dll
-D:\repo\Github\VRChat-Sima\bin\Debug\Template.pdb
-D:\repo\Github\VRChat-Sima\bin\Debug\Newtonsoft.Json.dll
-D:\repo\Github\VRChat-Sima\obj\Debug\Core.csproj.AssemblyReference.cache
-D:\repo\Github\VRChat-Sima\obj\Debug\Core.csproj.CoreCompileInputs.cache
-D:\repo\Github\VRChat-Sima\obj\Debug\Core.csproj.CopyComplete
-D:\repo\Github\VRChat-Sima\obj\Debug\Template.dll
-D:\repo\Github\VRChat-Sima\obj\Debug\Template.pdb
