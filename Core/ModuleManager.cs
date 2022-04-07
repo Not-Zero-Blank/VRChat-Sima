@@ -121,7 +121,7 @@ namespace Sima.Core
                 }
                 catch (Exception e)
                 {
-                    if (e.Message.Contains("System.NotImplementedException"))
+                    if (e.ToString().Contains("System.NotImplementedException"))
                     {
                         Logs.Error($"Cant Enable {ModuleName} Its not implemented!");
                         enabled = false;
@@ -140,7 +140,7 @@ namespace Sima.Core
                 }
                 catch (Exception e)
                 {
-                    if (e.Message.Contains("System.NotImplementedException"))
+                    if (e.ToString().Contains("System.NotImplementedException"))
                     {
                         Logs.Error($"Cant Disable {ModuleName} Its not implemented!");
                         enabled = false;
@@ -160,7 +160,7 @@ namespace Sima.Core
                 }
                 catch (Exception e) 
                 {
-                    if (e.Message.Contains("System.NotImplementedException"))
+                    if (e.ToString().Contains("System.NotImplementedException"))
                     {
                         OnSceneWasLoadedMethod = null;
                         return;
@@ -178,7 +178,7 @@ namespace Sima.Core
                 }
                 catch (Exception e) 
                 {
-                    if (e.Message.Contains("System.NotImplementedException"))
+                    if (e.ToString().Contains("System.NotImplementedException"))
                     {
                         OnSceneWasInitializedMethod = null;
                         return;
@@ -196,7 +196,7 @@ namespace Sima.Core
                 }
                 catch (Exception e) 
                 {
-                    if (e.Message.Contains("System.NotImplementedException"))
+                    if (e.ToString().Contains("System.NotImplementedException"))
                     {
                         OnSceneWasUnloadedMethod = null;
                         return;
@@ -214,7 +214,7 @@ namespace Sima.Core
                 }
                 catch (Exception e) 
                 {
-                    if (e.Message.Contains("System.NotImplementedException"))
+                    if (e.ToString().Contains("System.NotImplementedException"))
                     {
                         OnFixedUpdateMethod = null;
                         return;
@@ -232,7 +232,7 @@ namespace Sima.Core
                 }
                 catch (Exception e) 
                 {
-                    if (e.Message.Contains("System.NotImplementedException"))
+                    if (e.ToString().Contains("System.NotImplementedException"))
                     {
                         OnPreSupportModuleMethod = null;
                         return;
@@ -250,7 +250,7 @@ namespace Sima.Core
                 }
                 catch (Exception e)
                 {
-                    if (e.Message.Contains("System.NotImplementedException"))
+                    if (e.ToString().Contains("System.NotImplementedException"))
                     {
                         OnApplicationStartMethod = null;
                         return;
@@ -267,7 +267,7 @@ namespace Sima.Core
                 }
                 catch (Exception e) 
                 { 
-                    if (e.Message.Contains("System.NotImplementedException"))
+                    if (e.ToString().Contains("System.NotImplementedException"))
                     {
                         OnApplicationLateStartMethod = null;
                         return;
@@ -285,7 +285,7 @@ namespace Sima.Core
                 }
                 catch (Exception e)
                 {
-                    if (e.Message.Contains("System.NotImplementedException"))
+                    if (e.ToString().Contains("System.NotImplementedException"))
                     {
                         OnUpdateMethod = null;
                         return;
@@ -303,7 +303,7 @@ namespace Sima.Core
                 }
                 catch (Exception e)
                 {
-                    if (e.Message.Contains("System.NotImplementedException"))
+                    if (e.ToString().Contains("System.NotImplementedException"))
                     {
                         OnLateUpdateMethod = null;
                         return;
@@ -321,7 +321,7 @@ namespace Sima.Core
                 }
                 catch (Exception e) 
                 {
-                    if (e.Message.Contains("System.NotImplementedException"))
+                    if (e.ToString().Contains("System.NotImplementedException"))
                     {
                         OnApplicationStartMethod = null;
                         return;
@@ -339,7 +339,7 @@ namespace Sima.Core
                 }
                 catch (Exception e) 
                 {
-                    if (e.Message.Contains("System.NotImplementedException"))
+                    if (e.ToString().Contains("System.NotImplementedException"))
                     {
                         OnApplicationQuitMethod = null;
                         return;
@@ -357,7 +357,7 @@ namespace Sima.Core
                 }
                 catch (Exception e) 
                 {
-                    if (e.Message.Contains("System.NotImplementedException"))
+                    if (e.ToString().Contains("System.NotImplementedException"))
                     {
                         OnPreferencesSavedMethod = null;
                         return;
@@ -375,7 +375,7 @@ namespace Sima.Core
                 }
                 catch (Exception e)
                 {
-                    if (e.Message.Contains("System.NotImplementedException"))
+                    if (e.ToString().Contains("System.NotImplementedException"))
                     {
                         OnPreferencesSaved2Method = null;
                         return;
@@ -393,7 +393,7 @@ namespace Sima.Core
                 }
                 catch (Exception e) 
                 {
-                    if (e.Message.Contains("System.NotImplementedException"))
+                    if (e.ToString().Contains("System.NotImplementedException"))
                     {
                         OnPreferencesLoadedMethod = null;
                         return;
@@ -411,7 +411,7 @@ namespace Sima.Core
                 }
                 catch (Exception e) 
                 {
-                    if (e.Message.Contains("System.NotImplementedException"))
+                    if (e.ToString().Contains("System.NotImplementedException"))
                     {
                         OnPreferencesLoaded2Method = null;
                         return;
