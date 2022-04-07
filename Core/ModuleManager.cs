@@ -119,13 +119,14 @@ namespace Sima.Core
                     OnEnableMethod.Invoke(instance, null);
                     enabled = true;
                 }
-                catch (NotImplementedException a) 
-                {
-                    Logs.Error($"Cant Enable {ModuleName} Its not implemented!");
-                    enabled = false;
-                }
                 catch (Exception e)
                 {
+                    if (e.Message.Contains("System.NotImplementedException"))
+                    {
+                        Logs.Error($"Cant Enable {ModuleName} Its not implemented!");
+                        enabled = false;
+                        return;
+                    }
                     Logs.Error($"Failed Enabling {ModuleName} Reason: " + e);
                     enabled = false;
                 }
@@ -137,13 +138,14 @@ namespace Sima.Core
                     OnDisableMethod.Invoke(instance, null);
                     enabled = false;
                 }
-                catch (NotImplementedException a)
-                {
-                    Logs.Error($"Cant Enable {ModuleName} Its not implemented!");
-                    enabled = false;
-                }
                 catch (Exception e)
                 {
+                    if (e.Message.Contains("System.NotImplementedException"))
+                    {
+                        Logs.Error($"Cant Disable {ModuleName} Its not implemented!");
+                        enabled = false;
+                        return;
+                    }
                     Logs.Error($"Failed Disabling {ModuleName} Reason: " + e);
                     enabled = false;
                 }
@@ -156,8 +158,15 @@ namespace Sima.Core
                 {
                     OnSceneWasLoadedMethod.Invoke(instance, new object[] { buildIndex, sceneName });
                 }
-                catch (NotImplementedException a) { OnSceneWasLoadedMethod = null; }
-                catch (Exception e) { Logs.Error($"Failed OnSceneWasLoaded {ModuleName} Reason: {e}"); }
+                catch (Exception e) 
+                {
+                    if (e.Message.Contains("System.NotImplementedException"))
+                    {
+                        OnSceneWasLoadedMethod = null;
+                        return;
+                    }
+                    Logs.Error($"Failed OnSceneWasLoaded {ModuleName} Reason: {e}"); 
+                }
             }
             public void OnSceneWasInitialized(int buildIndex, string sceneName)
             {
@@ -167,8 +176,15 @@ namespace Sima.Core
                 {
                     OnSceneWasInitializedMethod.Invoke(instance, new object[] { buildIndex, sceneName });
                 }
-                catch (NotImplementedException a) { OnSceneWasInitializedMethod = null; }
-                catch (Exception e) { Logs.Error($"Failed OnSceneWasInitialized {ModuleName} Reason: {e}"); }
+                catch (Exception e) 
+                {
+                    if (e.Message.Contains("System.NotImplementedException"))
+                    {
+                        OnSceneWasInitializedMethod = null;
+                        return;
+                    }
+                    Logs.Error($"Failed OnSceneWasInitialized {ModuleName} Reason: {e}");
+                }
             }
             public void OnSceneWasUnloaded(int buildIndex, string sceneName)
             {
@@ -178,8 +194,15 @@ namespace Sima.Core
                 {
                     OnSceneWasUnloadedMethod.Invoke(instance, new object[] { buildIndex, sceneName });
                 }
-                catch (NotImplementedException a) { OnSceneWasUnloadedMethod = null; }
-                catch (Exception e) { Logs.Error($"Failed OnSceneWasUnloaded {ModuleName} Reason: {e}"); }
+                catch (Exception e) 
+                {
+                    if (e.Message.Contains("System.NotImplementedException"))
+                    {
+                        OnSceneWasUnloadedMethod = null;
+                        return;
+                    }
+                    Logs.Error($"Failed OnSceneWasUnloaded {ModuleName} Reason: {e}"); 
+                }
             }
             public void OnFixedUpdate()
             {
@@ -189,8 +212,15 @@ namespace Sima.Core
                 {
                     OnFixedUpdateMethod.Invoke(instance, null);
                 }
-                catch (NotImplementedException a) { OnFixedUpdateMethod = null; }
-                catch (Exception e) { Logs.Error($"Failed OnFixedUpdate {ModuleName} Reason: {e}"); }
+                catch (Exception e) 
+                {
+                    if (e.Message.Contains("System.NotImplementedException"))
+                    {
+                        OnFixedUpdateMethod = null;
+                        return;
+                    }
+                    Logs.Error($"Failed OnFixedUpdate {ModuleName} Reason: {e}"); 
+                }
             }
             public void OnPreSupportModule()
             {
@@ -200,8 +230,15 @@ namespace Sima.Core
                 {
                     OnPreSupportModuleMethod.Invoke(instance, null);
                 }
-                catch (NotImplementedException a) { OnPreSupportModuleMethod = null; }
-                catch (Exception e) { Logs.Error($"Failed OnPreSupportModule {ModuleName} Reason: {e}"); }
+                catch (Exception e) 
+                {
+                    if (e.Message.Contains("System.NotImplementedException"))
+                    {
+                        OnPreSupportModuleMethod = null;
+                        return;
+                    }
+                    Logs.Error($"Failed OnPreSupportModule {ModuleName} Reason: {e}"); 
+                }
             }
             public void OnApplicationStart()
             {
@@ -211,8 +248,14 @@ namespace Sima.Core
                 {
                     OnApplicationStartMethod.Invoke(instance, null);
                 }
-                catch (NotImplementedException a) { OnApplicationStartMethod = null; }
-                catch (Exception e) { Logs.Error($"Failed OnApplicationStart {ModuleName} Reason: {e}"); }
+                catch (Exception e)
+                {
+                    if (e.Message.Contains("System.NotImplementedException"))
+                    {
+                        OnApplicationStartMethod = null;
+                        return;
+                    }
+                    Logs.Error($"Failed OnApplicationStart {ModuleName} Reason: {e}"); }
             }
             public void OnApplicationLateStart()
             {
@@ -222,8 +265,15 @@ namespace Sima.Core
                 {
                     OnApplicationLateStartMethod.Invoke(instance, null);
                 }
-                catch (NotImplementedException a) { OnApplicationLateStartMethod = null; }
-                catch (Exception e) { Logs.Error($"Failed OnApplicationLateStart {ModuleName} Reason: {e}"); }
+                catch (Exception e) 
+                { 
+                    if (e.Message.Contains("System.NotImplementedException"))
+                    {
+                        OnApplicationLateStartMethod = null;
+                        return;
+                    }
+                    Logs.Error($"Failed OnApplicationLateStart {ModuleName} Reason: {e}"); 
+                }
             }
             public void OnUpdate()
             {
@@ -233,8 +283,15 @@ namespace Sima.Core
                 {
                     OnUpdateMethod.Invoke(instance, null);
                 }
-                catch (NotImplementedException a) { OnUpdateMethod = null; }
-                catch (Exception e) { Logs.Error($"Failed OnUpdate {ModuleName} Reason: {e}"); }
+                catch (Exception e)
+                {
+                    if (e.Message.Contains("System.NotImplementedException"))
+                    {
+                        OnUpdateMethod = null;
+                        return;
+                    }
+                    Logs.Error($"Failed OnUpdate {ModuleName} Reason: {e}"); 
+                }
             }
             public void OnLateUpdate()
             {
@@ -244,8 +301,15 @@ namespace Sima.Core
                 {
                     OnLateUpdateMethod.Invoke(instance, null);
                 }
-                catch (NotImplementedException a) { OnLateUpdateMethod = null; }
-                catch (Exception e) { Logs.Error($"Failed OnLateUpdate {ModuleName} Reason: {e}"); }
+                catch (Exception e)
+                {
+                    if (e.Message.Contains("System.NotImplementedException"))
+                    {
+                        OnLateUpdateMethod = null;
+                        return;
+                    }
+                    Logs.Error($"Failed OnLateUpdate {ModuleName} Reason: {e}"); 
+                }
             }
             public void OnGUI()
             {
@@ -255,8 +319,15 @@ namespace Sima.Core
                 {
                     OnGUIMethod.Invoke(instance, null);
                 }
-                catch (NotImplementedException a) { OnGUIMethod = null; }
-                catch (Exception e) { Logs.Error($"Failed OnGUI {ModuleName} Reason: {e}"); }
+                catch (Exception e) 
+                {
+                    if (e.Message.Contains("System.NotImplementedException"))
+                    {
+                        OnApplicationStartMethod = null;
+                        return;
+                    }
+                    Logs.Error($"Failed OnGUI {ModuleName} Reason: {e}"); 
+                }
             }
             public void OnApplicationQuit()
             {
@@ -266,8 +337,15 @@ namespace Sima.Core
                 {
                     OnApplicationQuitMethod.Invoke(instance, null);
                 }
-                catch (NotImplementedException a) { OnApplicationQuitMethod = null; }
-                catch (Exception e) { Logs.Error($"Failed OnApplicationQuit {ModuleName} Reason: {e}"); }
+                catch (Exception e) 
+                {
+                    if (e.Message.Contains("System.NotImplementedException"))
+                    {
+                        OnApplicationQuitMethod = null;
+                        return;
+                    }
+                    Logs.Error($"Failed OnApplicationQuit {ModuleName} Reason: {e}"); 
+                }
             }
             public void OnPreferencesSaved()
             {
@@ -277,8 +355,15 @@ namespace Sima.Core
                 {
                     OnPreferencesSavedMethod.Invoke(instance, null);
                 }
-                catch (NotImplementedException a) { OnPreferencesSavedMethod = null; }
-                catch (Exception e) { Logs.Error($"Failed OnPreferencesSaved {ModuleName} Reason: {e}"); }
+                catch (Exception e) 
+                {
+                    if (e.Message.Contains("System.NotImplementedException"))
+                    {
+                        OnPreferencesSavedMethod = null;
+                        return;
+                    }
+                    Logs.Error($"Failed OnPreferencesSaved {ModuleName} Reason: {e}"); 
+                }
             }
             public void OnPreferencesSaved(string filepath)
             {
@@ -288,8 +373,15 @@ namespace Sima.Core
                 {
                     OnPreferencesSaved2Method.Invoke(instance, new object[] { filepath });
                 }
-                catch (NotImplementedException a) { OnPreferencesSaved2Method = null; }
-                catch (Exception e) { Logs.Error($"Failed OnPreferencesSaved {ModuleName} Reason: {e}"); }
+                catch (Exception e)
+                {
+                    if (e.Message.Contains("System.NotImplementedException"))
+                    {
+                        OnPreferencesSaved2Method = null;
+                        return;
+                    }
+                    Logs.Error($"Failed OnPreferencesSaved {ModuleName} Reason: {e}"); 
+                }
             }
             public void OnPreferencesLoaded()
             {
@@ -299,8 +391,15 @@ namespace Sima.Core
                 {
                     OnPreferencesLoadedMethod.Invoke(instance, null);
                 }
-                catch (NotImplementedException a) { OnPreferencesLoadedMethod = null; }
-                catch (Exception e) { Logs.Error($"Failed OnPreferencesLoaded {ModuleName} Reason: {e}"); }
+                catch (Exception e) 
+                {
+                    if (e.Message.Contains("System.NotImplementedException"))
+                    {
+                        OnPreferencesLoadedMethod = null;
+                        return;
+                    }
+                    Logs.Error($"Failed OnPreferencesLoaded {ModuleName} Reason: {e}");
+                }
             }
             public void OnPreferencesLoaded(string filepath)
             {
@@ -310,8 +409,15 @@ namespace Sima.Core
                 {
                     OnPreferencesLoaded2Method.Invoke(instance, new object[] { filepath });
                 }
-                catch (NotImplementedException a) { OnPreferencesLoaded2Method = null; }
-                catch (Exception e) { Logs.Error($"Failed OnPreferencesLoaded {ModuleName} Reason: {e}"); }
+                catch (Exception e) 
+                {
+                    if (e.Message.Contains("System.NotImplementedException"))
+                    {
+                        OnPreferencesLoaded2Method = null;
+                        return;
+                    }
+                    Logs.Error($"Failed OnPreferencesLoaded {ModuleName} Reason: {e}"); 
+                }
             }
             #endregion
         }
