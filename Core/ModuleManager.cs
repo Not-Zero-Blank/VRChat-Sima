@@ -151,151 +151,166 @@ namespace Core
             public void OnSceneWasLoaded(int buildIndex, string sceneName)
             {
                 if (!enabled) return;
+                if (OnSceneWasLoadedMethod == null) return;
                 try
                 {
                     OnSceneWasLoadedMethod.Invoke(instance, new object[] { buildIndex, sceneName });
                 }
-                catch (NotImplementedException a) { }
+                catch (NotImplementedException a) { OnSceneWasLoadedMethod = null; }
                 catch (Exception e) { Logs.Error($"Failed OnSceneWasLoaded {ModuleName} Reason: {e}"); }
             }
             public void OnSceneWasInitialized(int buildIndex, string sceneName)
             {
                 if (!enabled) return;
+                if (OnSceneWasInitializedMethod == null) return;
                 try
                 {
                     OnSceneWasInitializedMethod.Invoke(instance, new object[] { buildIndex, sceneName });
                 }
-                catch (NotImplementedException a) { }
+                catch (NotImplementedException a) { OnSceneWasInitializedMethod = null; }
                 catch (Exception e) { Logs.Error($"Failed OnSceneWasInitialized {ModuleName} Reason: {e}"); }
             }
             public void OnSceneWasUnloaded(int buildIndex, string sceneName)
             {
                 if (!enabled) return;
+                if (OnSceneWasUnloadedMethod == null) return;
                 try
                 {
                     OnSceneWasUnloadedMethod.Invoke(instance, new object[] { buildIndex, sceneName });
                 }
-                catch (NotImplementedException a) { }
+                catch (NotImplementedException a) { OnSceneWasUnloadedMethod = null; }
                 catch (Exception e) { Logs.Error($"Failed OnSceneWasUnloaded {ModuleName} Reason: {e}"); }
             }
             public void OnFixedUpdate()
             {
                 if (!enabled) return;
+                if (OnFixedUpdateMethod == null) return;
                 try
                 {
                     OnFixedUpdateMethod.Invoke(instance, null);
                 }
-                catch (NotImplementedException a) { }
+                catch (NotImplementedException a) { OnFixedUpdateMethod = null; }
                 catch (Exception e) { Logs.Error($"Failed OnFixedUpdate {ModuleName} Reason: {e}"); }
             }
             public void OnPreSupportModule()
             {
                 if (!enabled) return;
+                if (OnPreSupportModuleMethod == null) return;
                 try
                 {
                     OnPreSupportModuleMethod.Invoke(instance, null);
                 }
-                catch (NotImplementedException a) { }
+                catch (NotImplementedException a) { OnPreSupportModuleMethod = null; }
                 catch (Exception e) { Logs.Error($"Failed OnPreSupportModule {ModuleName} Reason: {e}"); }
             }
             public void OnApplicationStart()
             {
                 if (!enabled) return;
+                if (OnApplicationStartMethod == null) return;
                 try
                 {
                     OnApplicationStartMethod.Invoke(instance, null);
                 }
-                catch (NotImplementedException a) { }
+                catch (NotImplementedException a) { OnApplicationStartMethod = null; }
                 catch (Exception e) { Logs.Error($"Failed OnApplicationStart {ModuleName} Reason: {e}"); }
             }
             public void OnApplicationLateStart()
             {
                 if (!enabled) return;
+                if (OnApplicationLateStartMethod == null) return;
                 try
                 {
                     OnApplicationLateStartMethod.Invoke(instance, null);
                 }
-                catch (NotImplementedException a) { }
+                catch (NotImplementedException a) { OnApplicationLateStartMethod = null; }
                 catch (Exception e) { Logs.Error($"Failed OnApplicationLateStart {ModuleName} Reason: {e}"); }
             }
             public void OnUpdate()
             {
                 if (!enabled) return;
+                if (OnUpdateMethod == null) return;
                 try
                 {
                     OnUpdateMethod.Invoke(instance, null);
                 }
-                catch (NotImplementedException a) { }
+                catch (NotImplementedException a) { OnUpdateMethod = null; }
                 catch (Exception e) { Logs.Error($"Failed OnUpdate {ModuleName} Reason: {e}"); }
             }
             public void OnLateUpdate()
             {
                 if (!enabled) return;
+                if (OnLateUpdateMethod == null) return;
                 try
                 {
                     OnLateUpdateMethod.Invoke(instance, null);
                 }
-                catch (NotImplementedException a) { }
+                catch (NotImplementedException a) { OnLateUpdateMethod = null; }
                 catch (Exception e) { Logs.Error($"Failed OnLateUpdate {ModuleName} Reason: {e}"); }
             }
             public void OnGUI()
             {
                 if (!enabled) return;
+                if (OnGUIMethod == null) return;
                 try
                 {
                     OnGUIMethod.Invoke(instance, null);
                 }
-                catch (NotImplementedException a) { }
+                catch (NotImplementedException a) { OnGUIMethod = null; }
                 catch (Exception e) { Logs.Error($"Failed OnGUI {ModuleName} Reason: {e}"); }
             }
             public void OnApplicationQuit()
             {
                 if (!enabled) return;
+                if  (OnApplicationQuitMethod == null) return;
                 try
                 {
                     OnApplicationQuitMethod.Invoke(instance, null);
                 }
-                catch (NotImplementedException a) { }
+                catch (NotImplementedException a) { OnApplicationQuitMethod = null; }
                 catch (Exception e) { Logs.Error($"Failed OnApplicationQuit {ModuleName} Reason: {e}"); }
             }
             public void OnPreferencesSaved()
             {
                 if (!enabled) return;
+                if (OnPreferencesSavedMethod == null) return;
                 try
                 {
                     OnPreferencesSavedMethod.Invoke(instance, null);
                 }
-                catch (NotImplementedException a) { }
+                catch (NotImplementedException a) { OnPreferencesSavedMethod = null; }
                 catch (Exception e) { Logs.Error($"Failed OnPreferencesSaved {ModuleName} Reason: {e}"); }
             }
             public void OnPreferencesSaved(string filepath)
             {
                 if (!enabled) return;
+                if (OnPreferencesSaved2Method == null) return;
                 try
                 {
                     OnPreferencesSaved2Method.Invoke(instance, new object[] { filepath });
                 }
-                catch (NotImplementedException a) { }
+                catch (NotImplementedException a) { OnPreferencesSaved2Method = null; }
                 catch (Exception e) { Logs.Error($"Failed OnPreferencesSaved {ModuleName} Reason: {e}"); }
             }
             public void OnPreferencesLoaded()
             {
                 if (!enabled) return;
+                if (OnPreferencesLoadedMethod == null) return;
                 try
                 {
                     OnPreferencesLoadedMethod.Invoke(instance, null);
                 }
-                catch (NotImplementedException a) { }
+                catch (NotImplementedException a) { OnPreferencesLoadedMethod = null; }
                 catch (Exception e) { Logs.Error($"Failed OnPreferencesLoaded {ModuleName} Reason: {e}"); }
             }
             public void OnPreferencesLoaded(string filepath)
             {
                 if (!enabled) return;
+                if (OnPreferencesLoaded2Method == null) return;
                 try
                 {
                     OnPreferencesLoaded2Method.Invoke(instance, new object[] { filepath });
                 }
-                catch (NotImplementedException a) { }
+                catch (NotImplementedException a) { OnPreferencesLoaded2Method = null; }
                 catch (Exception e) { Logs.Error($"Failed OnPreferencesLoaded {ModuleName} Reason: {e}"); }
             }
             #endregion
