@@ -6,14 +6,21 @@ using Sima.Core;
 internal class Main : MelonLoader.MelonMod
 {
     internal const string Version = "1.0.0.0";
-    internal const string Name = "Sima";
+    internal const string Name = "SIMA";
     internal const string Author = "Blank";
     public override void OnApplicationStart()
     {
         AppDomain.CurrentDomain.UnhandledException += HandleException;
-        Console.WriteLine("Hello");
+        Callbacks.StartCallbacks();
         ModuleManager.RegisterModules();
         foreach (ModuleManager.Module a in ModuleManager.Modules) a.OnApplicationStart();
+        Blanks_Patches.PatchAll(delegate (Blanks_Patches patch, Exception e)
+        {
+            Logs.Error($"Coudnt Patch  [{patch.basis.Name ?? "null"}] PatchingMethod [{patch.PatchingMethod.Name ?? "null"}] Reason: {e}");
+        }, delegate (Blanks_Patches patch, Exception e)
+        {
+            Logs.Text($"Patched [{patch.basis.Name}] with Method {patch.PatchingMethod.Name}");
+        });
     }
     public override void OnApplicationLateStart()
     {

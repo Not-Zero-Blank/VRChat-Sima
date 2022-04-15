@@ -4,19 +4,12 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using VRC;
 
 namespace Sima.Core
 {
-    public interface IModule
+    public interface IScene : IModule
     {
-        /// <summary>
-        /// Runs when the Module gets Enabled
-        /// </summary>
-        void OnEnable();
-        /// <summary>
-        /// Runs when the Module gets Disabled
-        /// </summary>
-        void OnDisable();
         /// <summary>
         /// Runs when a Scene has Loaded and is passed the Scene's Build Index and Name.
         /// </summary>
@@ -35,32 +28,103 @@ namespace Sima.Core
         /// <param name="buildIndex"></param>
         /// <param name="sceneName"></param>
         void OnSceneWasUnloaded(int buildIndex, string sceneName);
+    }
+    public interface IUpdate : IModule
+    {
+        void OnUpdate();
+        void OnLateUpdate();
+        void OnGUI();
         /// <summary>
         /// Can run multiple times per frame. Mostly used for Physics.
         /// </summary>
         void OnFixedUpdate();
-        void OnPreSupportModule();
-        void OnApplicationStart();
-        void OnApplicationLateStart();
-        void OnUpdate();
-        void OnLateUpdate();
-        void OnGUI();
-        void OnApplicationQuit();
+    }
+    public interface IPreferences : IModule
+    {
         void OnPreferencesSaved();
         void OnPreferencesSaved(string filepath);
         void OnPreferencesLoaded();
         void OnPreferencesLoaded(string filepath);
     }
+    public interface IApplication : IModule
+    {
+        void OnApplicationStart();
+        void OnApplicationLateStart();
+        void OnApplicationQuit();
+    }
+    public interface IModule
+    {
+        /// <summary>
+        /// Runs when the Module gets Enabled
+        /// </summary>
+        void OnEnable();
+        /// <summary>
+        /// Runs when the Module gets Disabled
+        /// </summary>
+        void OnDisable();
+    }
+    public interface IWorldCallbacks : IModule
+    {
+        void OnWorldJoined(VRC.Core.ApiWorld joinedworld ,VRC.Core.ApiWorldInstance joinedinstance);
+        void OnWorldLeft();
+        void WorldIntialized();
+        void PlayerJoined(Player player);
+        void PlayerLeft(Player player);
+    }
     internal static class ModuleManager
     {
         public class Module
         {
+            public class WorldCallBackModule
+            {
+                public WorldCallBackModule(Type type)
+                {
+                    OnWorldJoinedMethod = type.GetMethod(nameof(OnWorldJoined));
+                    OnWorldLeftMethod = type.GetMethod(nameof(OnWorldLeft));
+                    PlayerJoinedMethod = type.GetMethod(nameof(PlayerJoined));
+                    PlayerLeftMethod = type.GetMethod(nameof(PlayerLeft));
+                    WorldIntializedMethod = type.GetMethod(nameof(WorldIntialized));
+                    instance = Activator.CreateInstance(type);
+                }
+                public object instance;
+                #region MethodInfo
+                public MethodInfo OnWorldJoinedMethod;
+                public MethodInfo OnWorldLeftMethod;
+                public MethodInfo PlayerJoinedMethod;
+                public MethodInfo PlayerLeftMethod;
+                public MethodInfo WorldIntializedMethod;
+                #endregion
+            }
             public Module(Type module)
             {
                 try
                 {
                     type = module;
-                    Logs.Text("Initalizing " + type.Name + "from " + AssemblyName);
+                    var worldcallbacks = type.GetNestedTypes().Where(p => typeof(IWorldCallbacks).IsAssignableFrom(p));
+                    if (worldcallbacks.Count() == 0)
+                    {
+                        if (typeof(IWorldCallbacks).IsAssignableFrom(type))
+                        {
+                            Logs.Text("Intializing SubModule IWorldCallbacks for " + ModuleName);
+                            worldmodule.Add(new WorldCallBackModule(type));
+                        }
+                    }
+                    else
+                    {
+                        Logs.Text($"Intializing [{worldcallbacks.Count()}] SubModules IWorldCallbacks for " + ModuleName);
+                        foreach (Type a in worldcallbacks)
+                        {
+                            worldmodule.Add(new WorldCallBackModule(a));
+                        }
+                    }
+                    if (AssemblyName != "SIMA")
+                    {
+                        Logs.Warning("Initalizing " + type.Name + " from " + AssemblyName);
+                    }
+                    else
+                    {
+                        Logs.Text($"[{Category}] Loading " + type.Name + " module");
+                    }
                     instance = Activator.CreateInstance(module);
                 }
                 catch (Exception e)
@@ -88,8 +152,10 @@ namespace Sima.Core
                 Modules.Add(this);
             }
             public Type type;
+            public List<WorldCallBackModule> worldmodule = new List<WorldCallBackModule>();
             public string ModuleName => type.Name;
             public string AssemblyName => type.Assembly.GetName().Name;
+            public string Category => type.Namespace.Split('.').Last();
             object instance;
             bool enabled = true;
             #region MethodInfos
@@ -420,16 +486,125 @@ namespace Sima.Core
                 }
             }
             #endregion
+            #region MethodsWorldCallback
+            public void OnWorldJoined(VRC.Core.ApiWorld joinedworld, VRC.Core.ApiWorldInstance joinedinstance)
+            {
+                if (!enabled) return;
+                foreach (WorldCallBackModule a in worldmodule)
+                {
+                    if (a.OnWorldJoinedMethod == null) continue;
+                    try
+                    {
+                        a.OnWorldJoinedMethod.Invoke(a.instance, new object[] { joinedworld,joinedinstance });
+                    }
+                    catch (Exception e)
+                    {
+                        if (e.ToString().Contains("System.NotImplementedException"))
+                        {
+                            a.OnWorldJoinedMethod = null;
+                            return;
+                        }
+                        Logs.Error($"Failed OnWorldJoined {ModuleName} Reason: {e}");
+                    }
+                }
+            }
+            public void OnWorldLeft()
+            {
+                if (!enabled) return;
+                foreach (WorldCallBackModule a in worldmodule)
+                {
+                    if (a.OnWorldLeftMethod == null) continue;
+                    try
+                    {
+                        a.OnWorldLeftMethod.Invoke(a.instance, null);
+                    }
+                    catch (Exception e)
+                    {
+                        if (e.ToString().Contains("System.NotImplementedException"))
+                        {
+                            a.OnWorldLeftMethod = null;
+                            return;
+                        }
+                        Logs.Error($"Failed OnWorldLeft {ModuleName} Reason: {e}");
+                    }
+                }
+            }
+            public void WorldIntialized()
+            {
+                if (!enabled) return;
+                foreach (WorldCallBackModule a in worldmodule)
+                {
+                    if (a.WorldIntializedMethod == null) continue;
+                    try
+                    {
+                        a.WorldIntializedMethod.Invoke(a.instance, null);
+                    }
+                    catch (Exception e)
+                    {
+                        if (e.ToString().Contains("System.NotImplementedException"))
+                        {
+                            a.WorldIntializedMethod = null;
+                            return;
+                        }
+                        Logs.Error($"Failed OnWorldIntialized {ModuleName} Reason: {e}");
+                    }
+                }
+            }
+            public void PlayerJoined(Player player)
+            {
+                if (!enabled) return;
+                if (player == null) return;
+                foreach (WorldCallBackModule a in worldmodule)
+                {
+                    if (a.PlayerJoinedMethod == null) continue;
+                    try
+                    {
+                        a.PlayerJoinedMethod.Invoke(a.instance, new object[] { player });
+                    }
+                    catch (Exception e)
+                    {
+                        if (e.ToString().Contains("System.NotImplementedException"))
+                        {
+                            a.PlayerJoinedMethod = null;
+                            return;
+                        }
+                        Logs.Error($"Failed PlayerJoined {ModuleName} Reason: {e}");
+                    }
+                }
+            }
+            public void PlayerLeft(Player player)
+            {
+                if (!enabled) return;
+                if (player == null) return;
+                foreach (WorldCallBackModule a in worldmodule)
+                {
+                    if (OnPreferencesLoaded2Method == null) continue;
+                    try
+                    {
+                        a.PlayerLeftMethod.Invoke(a.instance, new object[] { player });
+                    }
+                    catch (Exception e)
+                    {
+                        if (e.ToString().Contains("System.NotImplementedException"))
+                        {
+                            a.PlayerLeftMethod = null;
+                            return;
+                        }
+                        Logs.Error($"Failed PlayerLeft {ModuleName} Reason: {e}");
+                    }
+                }
+            }
+            #endregion
         }
         public static List<Module> Modules = new List<Module>();
         public static void RegisterModules()
         {
-    var interfacetype = typeof(IModule);
-    var types = AppDomain.CurrentDomain.GetAssemblies()
-        .SelectMany(s => s.GetTypes())
-        .Where(p => interfacetype.IsAssignableFrom(p) && !p.IsInterface);
-    Logs.Warning($"Found [{types.Count()}] Modules");
-    foreach (Type a in types) new Module(a);
-}
+            var interfacetype = typeof(IScene);
+            var types = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(s => s.GetTypes())
+                .Where(p => interfacetype.IsAssignableFrom(p) && !p.IsInterface);
+            Logs.Warning($"Found [{types.Count()}] Modules");
+            foreach (Type a in types) new Module(a);
+        }
     }
 }
