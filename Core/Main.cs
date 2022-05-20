@@ -29,12 +29,12 @@ internal class Main : MelonLoader.MelonMod
         {
             yield return null;
         }
-        ButtonManager.MenuLoaded();
+        foreach (SIMA_Module a in ModuleManager.Modules) a.OnUIManagerIntialized();
     }
         
     public override void OnApplicationLateStart()
     {
-        foreach (SIMA_Module a in ModuleManager.Modules) a.OnApplicationLateStart();
+        foreach (SIMA_Module a in ModuleManager.Modules) a.UIManagerIntialized();
     }
     public override void OnApplicationQuit()
     {

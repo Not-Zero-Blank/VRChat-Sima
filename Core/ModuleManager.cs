@@ -94,17 +94,27 @@ namespace Sima.Core
         public virtual void OnPreferencesSaved(string filepath) { }
         public virtual void OnPreferencesLoaded() { }
         public virtual void OnPreferencesLoaded(string filepath) { }
-
+        /// <summary>
+        /// Get Called if the avatar changes
+        /// </summary>
+        /// <param name="player"></param>
+        /// The Player
+        /// <param name="oldavatar"></param>
+        /// The Avatar the user used before is null if its the first avatar
+        /// <param name="newavatar"></param>
+        /// The Avatar he Player is now using
+        public virtual void OnAvatarReady(VRC.Player player, VRC.Core.ApiAvatar oldavatar, VRC.Core.ApiAvatar newavatar) { }
         public virtual void OnApplicationStart() { }
-        public virtual void OnApplicationLateStart() { }
+        public virtual void UIManagerIntialized() { }
         public virtual void OnApplicationQuit() { }
         public virtual void OnWorldJoined(VRC.Core.ApiWorld joinedworld, VRC.Core.ApiWorldInstance joinedinstance) { }
         public virtual void OnWorldLeft() { }
         public virtual void WorldIntialized() { }
         public virtual void PlayerJoined(Player player) { }
         public virtual void PlayerLeft(Player player) { }
+        public virtual void OnUIManagerIntialized() { }
     }
-    internal static class ButtonManager
+    internal class ButtonManager : SIMA_Module
     {
         static Dictionary<string, XButtonAPI.QMNestedButton> Menu = new Dictionary<string, XButtonAPI.QMNestedButton>();
         static XButtonAPI.QMNestedButton MainMenu;
@@ -113,7 +123,7 @@ namespace Sima.Core
         static List<ButtonInformations> TogglePropertysToCreate = new List<ButtonInformations>();
         static List<ButtonInformations> SingleButtonsToCreate = new List<ButtonInformations>();
         static List<ButtonInformations> WingsToCreate = new List<ButtonInformations>();
-        public static void MenuLoaded()
+        public override void OnUIManagerIntialized()
         {
             var category = new XButtonAPI.QMCategory("SIMA MODULES");
             UnityEngine.GameObject.Destroy(UnityEngine.GameObject.Find("UserInterface/Canvas_QuickMenu(Clone)/Container/Window/QMParent/Menu_Dashboard/ScrollRect/Viewport/VerticalLayoutGroup/Carousel_Banners"));

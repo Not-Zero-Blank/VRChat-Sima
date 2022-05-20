@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using VRC;
 using VRC.SDK3.Components;
 
 namespace Sima.Modules.Utils
@@ -43,9 +44,8 @@ namespace Sima.Modules.Utils
         }
         void Update()
         {
-            Vector3 rotate = Camera.main.transform.forward;
-            rotate.y -= 180;
-            textobject.transform.rotation = Quaternion.LookRotation(-rotate, Camera.main.transform.up);
+            Vector3 rotate = Camera.main.transform.position;
+            textobject.transform.rotation = Quaternion.LookRotation(-rotate);
         }
     }
 }

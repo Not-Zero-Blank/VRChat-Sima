@@ -23,7 +23,7 @@ namespace Sima.Modules.Utils
         public override void PlayerLeft(Player player)
         {
             if (!Active) return;
-            if (player.isMe() && ExcludeMe) return;
+            if (VRCPlayer.field_Internal_Static_VRCPlayer_0 == null && ExcludeMe) return;
             Logs.Text($"{player.field_Private_APIUser_0.displayName} Left!");
         }
     }
