@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>G:\SteamLibrary\steamapps\common\VRChat\MelonLoader\0Harmony.dll</HintPath>
+    </Reference>
     <Reference Include="Accessibility" />
     <Reference Include="Assembly-CSharp">
       <HintPath>G:\SteamLibrary\steamapps\common\VRChat\MelonLoader\Managed\Assembly-CSharp.dll</HintPath>
@@ -261,7 +264,8 @@
     <Reference Include="Unity.Timeline">
       <HintPath>G:\SteamLibrary\steamapps\common\VRChat\MelonLoader\Managed\Unity.Timeline.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine">
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>G:\SteamLibrary\steamapps\common\VRChat\MelonLoader\Managed\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AccessibilityModule">
@@ -384,7 +388,8 @@
     <Reference Include="UnityEngine.TextCoreModule">
       <HintPath>G:\SteamLibrary\steamapps\common\VRChat\MelonLoader\Managed\UnityEngine.TextCoreModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.TextRenderingModule">
+    <Reference Include="UnityEngine.TextRenderingModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>G:\SteamLibrary\steamapps\common\VRChat\MelonLoader\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TilemapModule">
@@ -522,45 +527,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Blanks_Patches.cs" />
+    <Compile Include="Core\ButtonAPI\ActionListener.cs" />
+    <Compile Include="Core\ButtonAPI\ButtonExtension.cs" />
+    <Compile Include="Core\ButtonAPI\IButtonPage.cs" />
+    <Compile Include="Core\ButtonAPI\XButtonAPI.cs" />
     <Compile Include="Core\Callbacks.cs" />
     <Compile Include="Core\Config.cs" />
     <Compile Include="Core\Logs.cs" />
     <Compile Include="Core\Main.cs" />
     <Compile Include="Core\ModuleManager.cs" />
-    <Compile Include="Core\XButtonAPI\ButtonExtension.cs" />
-    <Compile Include="Core\XButtonAPI\QMButtonBase.cs" />
-    <Compile Include="Core\XButtonAPI\QMCategory.cs" />
-    <Compile Include="Core\XButtonAPI\QMCategoryPage.cs" />
-    <Compile Include="Core\XButtonAPI\QMContainer.cs" />
-    <Compile Include="Core\XButtonAPI\QMEmptyButton.cs" />
-    <Compile Include="Core\XButtonAPI\QMEmptyWing.cs" />
-    <Compile Include="Core\XButtonAPI\QMHeader.cs" />
-    <Compile Include="Core\XButtonAPI\QMLabel.cs" />
-    <Compile Include="Core\XButtonAPI\QMNestedButton.cs" />
-    <Compile Include="Core\XButtonAPI\QMNestedWing.cs" />
-    <Compile Include="Core\XButtonAPI\QMSingleButton.cs" />
-    <Compile Include="Core\XButtonAPI\QMSingleToggleButton.cs" />
-    <Compile Include="Core\XButtonAPI\QMSingleWing.cs" />
-    <Compile Include="Core\XButtonAPI\QMSlider.cs" />
-    <Compile Include="Core\XButtonAPI\QMStuff.cs" />
-    <Compile Include="Core\XButtonAPI\QMTabMenu.cs" />
-    <Compile Include="Core\XButtonAPI\QMToggleButton.cs" />
-    <Compile Include="Core\XButtonAPI\QMToggleWing.cs" />
-    <Compile Include="Core\XButtonAPI\QMWingBase.cs" />
-    <Compile Include="Core\XButtonAPI\XButtonAPI.cs" />
     <Compile Include="Modules\Funny\TitleChanger.cs" />
     <Compile Include="Modules\LoadingScreen\LoadingMusic.cs" />
     <Compile Include="Modules\LoadingScreen\LoadingScreen.cs" />
-    <Compile Include="Modules\Utils\ESP.cs" />
+    <Compile Include="Modules\Private\Test.cs" />
+    <Compile Include="Modules\Utils\Blanks_Items.cs" />
     <Compile Include="Modules\Utils\FPS_Counter.cs" />
-    <Compile Include="Modules\Utils\Test.cs" />
+    <Compile Include="Modules\Utils\Join_Notify.cs" />
+    <Compile Include="Modules\Utils\KeyBinds.cs" />
     <Compile Include="Modules\Utils\QuitFix.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Utillity\Extensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Modules\Beta\" />
-    <Folder Include="Modules\Private\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

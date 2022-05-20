@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TMPro;
 using UnhollowerBaseLib;
+using UnhollowerBaseLib.Attributes;
 using UnhollowerRuntimeLib.XrefScans;
 using UnityEngine;
 using UnityEngine.Events;
@@ -576,17 +577,31 @@ namespace XButtonAPI
         {
             return new QMNestedButton(_container, ButtonText, PageText, false, tooltip, sprite);
         }
-
+        /// <summary>
+        /// DEAD METHOD THX TOXIC
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="tooltip"></param>
+        /// <param name="onClick"></param>
+        /// <param name="sprite"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public QMSingleButton AddSingle(string text, string tooltip, Action onClick, Sprite sprite = null)
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// NICHT NUTZEN DEAD THX TOXIC
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="tooltip"></param>
+        /// <param name="sprite"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public QMNestedButton AddMenuPage(string text, string tooltip = "", Sprite sprite = null)
         {
             throw new NotImplementedException();
         }
-
     }
     public class QMToggleWing : QMWingBase
     {
@@ -836,7 +851,7 @@ namespace XButtonAPI
     {
         private static Sprite OnIconSprite => QMStuff.Instance.field_Public_Transform_0.Find("Window/QMParent/Menu_Notifications/Panel_NoNotifications_Message/Icon").GetComponent<Image>().sprite;
         private readonly Toggle toggle;
-        private readonly ToggleIcon toggleIcon;
+        private readonly object toggleIcon;
 
 
         private bool _valueHolder;
@@ -846,7 +861,7 @@ namespace XButtonAPI
             base.SetTooltip(tooltip, tooltip);
             RectTransform.Find("Icon_On").GetComponent<Image>().sprite = OnIconSprite;
 
-            toggleIcon = GameObject.GetComponent<ToggleIcon>();
+            toggleIcon = ToggleFind();
 
             toggle = GameObject.GetComponent<Toggle>();
             toggle.onValueChanged = new Toggle.ToggleEvent();
@@ -858,7 +873,44 @@ namespace XButtonAPI
 
             XButtonAPI.allToggleButtons.Add(this);
         }
-
+        private Type ToggleType = null;
+        private object ToggleFind()
+        {
+            var Components = GameObject.GetComponents<Component>();
+            foreach (var c in Components)
+            {
+                var type = c.GetIl2CppType();
+                if (type.GetFields().Count != 1 || !type.GetFields().Any(x => x.FieldType.IsAssignableFrom(Il2CppSystem.Type.GetType("Toggle")) && x.IsPublic)) continue;
+                var cursedstuff = GetToggleType();
+                if (cursedstuff == null)
+                {
+                    return null;
+                }
+                return Activator.CreateInstance(cursedstuff, c.Pointer);
+            }
+            return null;
+        }
+        private Type GetToggleType()
+        {
+            if (ToggleType != null) return ToggleType;
+            foreach (Assembly a in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                foreach (Type b in a.GetTypes())
+                {
+                    foreach (var c in b.GetCustomAttributes<ObfuscatedNameAttribute>())
+                    {
+                        if (c.ObfuscatedName == "Toggle")
+                        {
+                            Logs.Warning("Found Toggle!");
+                            ToggleType = b;
+                            break;
+                        }
+                    }
+                }
+            }
+            Logs.Error("Codnt Find Toggle!");
+            return null;
+        }
         public void Toggle(bool value, bool callback = true, bool updateVisually = false)
         {
             _valueHolder = value;

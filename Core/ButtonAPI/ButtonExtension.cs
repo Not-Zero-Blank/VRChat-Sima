@@ -13,12 +13,12 @@ namespace ProjectXoX.Utility.Extension
 {
     public static class ButtonExtension
     {
-        private delegate void OnValueChangedDelegate(ToggleIcon toggleIcon, bool arg0);
+        private delegate void OnValueChangedDelegate(object toggleIcon, bool arg0);
         private static OnValueChangedDelegate _onValueChanged;
 
-        public static void OnValueChanged(this ToggleIcon toggleIcon, bool arg0)
+        public static void OnValueChanged(this object toggleIcon, bool arg0)
         {
-            if (_onValueChanged == null) _onValueChanged = (OnValueChangedDelegate)Delegate.CreateDelegate(typeof(OnValueChangedDelegate), typeof(ToggleIcon).GetMethods().FirstOrDefault(m => m.Name.StartsWith("Method_Private_Void_Boolean_PDM_") && QMStuff.CheckMethod(m, "Toggled")));
+            if (_onValueChanged == null) _onValueChanged = (OnValueChangedDelegate)Delegate.CreateDelegate(typeof(OnValueChangedDelegate), toggleIcon.GetType().GetMethods().FirstOrDefault(m => m.Name.StartsWith("Method_Private_Void_Boolean_PDM_") && QMStuff.CheckMethod(m, "Toggled")));
             _onValueChanged(toggleIcon, arg0);
         }
 
